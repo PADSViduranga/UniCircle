@@ -1,112 +1,138 @@
 package com.example.uniCircle.model;
 
 import jakarta.persistence.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.apache.catalina.Role;
 
-import javax.management.relation.Role;
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.Collections;
 
 @Entity
-@Table(name = "User")
-
-public class User implements UserDetails {
-
+@Table(name = "users")
+public class User  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", columnDefinition = "BIGINT")
     private Long id;
 
-    @Column(name = "full_name",nullable = false,length =255 )
+    @Column(name = "full_name", nullable = false, length = 255)
     private String fullName;
 
-    @Column(unique = true,nullable = false, length = 255)
+    @Column(name = "email",nullable = false,unique = true,length = 255)
     private String email;
 
-    @Column(nullable = false,length = 255)
+    @Column(name = "password",nullable = false,length = 255)
     private String password;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "role", nullable = false)
+    @Column(name = "role", nullable = false,columnDefinition = "Enum('SUPER_ADMIN','ADMIN','USER' )")
     private Role role;
 
     @Column(name = "bio",length = 255)
     private String bio;
 
-    @Column(name = "created_At", updatable = false)
+    @Column(name = "created_at",updatable = false,columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;
 
-    @Column(name ="created_By" ,length = 255)
-    private String createdBy;
-
-    @Column(name = "updated_At",updatable = false)
+    @Column(name = "updated_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime updatedAt;
 
-    @Column(name = "updated_At_Time")
-    private LocalDateTime updatedAtTime;
-
-    @Column(name = "updated_By",length = 255)
+    @Column(name = "updated_by", length = 255)
     private String updatedBy;
 
-    public enum Role{
-        ADMIN,
-        USER,
-        MODERATOR
-    }
+    @Column(name = "created_by",length = 255)
+    private String createdBy;
 
+    @Column(name = "enabled",nullable = false,
+    columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean enabled=false;
+
+    @Column(name = "account_non_locked", nullable = false,
+    columnDefinition = "BOOLEAN DEFAULT TRUE")
+    private boolean accountNonLocked=true;
+
+    @Column(name = "failed_login_attempts",nullable = false,
+    columnDefinition = "INT DEFAULT 0")
+    private int failedLoginAttempts=0;
+
+    @Column(name = "email_verified", nullable = false,
+    columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean emailVerified=false;
+
+    @Column(name = "email_verification_token",length = 100)
+    private String emailVerificationToken;
+
+    @Column(name = "verification_token_expiry",columnDefinition = "TIMESTAMP")
+    private LocalDateTime verificationTokenExpiry;
+
+    public enum Role{
+        SUPER_ADMIN,ADMIN,USER,CLUB_LEADER
+    }
     public User(){
 
     }
-    public User(String fullName,String email,String password){
+    public User(String fullName,String email,String password,Role role,
+                String createdBy){
         this.fullName=fullName;
-        this.email=email;
+        this.email=email.toLowerCase();
         this.password=password;
-        this.role=Role.USER;
-        this.createdAt=LocalDateTime.now();
-        this.updatedAt=LocalDateTime.now();
-        this.updatedAtTime=LocalDateTime.now();
+        this.role=role !=null ? role : Role.USER;
+        this.createdBy=createdBy;
     }
     @PrePersist
     protected void onCreate(){
-        LocalDateTime now=LocalDateTime.now();
-        if(createdAt==null) createdAt =now;
-        if(updatedAt==null) updatedAt=now;
-        if(updatedAtTime==null) updatedAtTime=now;
-        if (role==null) role=Role.USER;
+        if(createdAt==null){
+            createdAt=LocalDateTime.now();
+        }
+        if(updatedAt==null){
+            updatedAt=LocalDateTime.now();
+        }
+        if(email !=null){
+            email=email.toLowerCase();
+        }
+        if(emailVerificationToken==null && !emailVerified){
+            generateEmailVerificationToken();
+        }
     }
-
     @PreUpdate
     protected void onUpdate(){
         updatedAt=LocalDateTime.now();
-        updatedAtTime=LocalDateTime.now();
+        if(email !=null){
+            email=email.toLowerCase();
+        }
     }
+    public void generateEmailVerificationToken(){
+        this.emailVerificationToken=java.util.UUID.randomUUID().toString();
+        this.verificationTokenExpiry=LocalDateTime.now().plusHours(12);
+    }
+    public boolean verifyEmail(String token){
+        if(emailVerified)
+            return true;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities(){
-        return Collections.singletonList( new SimpleGrantedAuthority(
-                "ROLE_" +role.name()));
+        if (emailVerificationToken ==null || verificationTokenExpiry ==null){
+            return false;
+        }
+        if(verificationTokenExpiry.isBefore(LocalDateTime.now())){
+            return false;
+        }
+        if(emailVerificationToken.equals(token)){
+            this.emailVerified=true;
+            this.enabled=true;
+            this.emailVerificationToken=null;
+            this.verificationTokenExpiry=null;
+
+            return true;
+        }
+        return false;
     }
-    @Override
-    public String getUsername(){
-        return email;
+    public void recordFailedLoginAttempt(){
+        this.failedLoginAttempts++;
+
+        if(this.failedLoginAttempts>=5){
+            this.accountNonLocked=false;
+        }
     }
-    @Override
-    public boolean isAccountNonExpired(){
-        return true;
-    }
-    @Override
-    public boolean isAccountNonLocked(){
-        return true;
-    }
-    @Override
-    public boolean isCredentialsNonExpired(){
-        return true;
-    }
-    @Override
-    public boolean isEnabled(){
-        return true;
+    public void recordSuccessfulLogin(){
+        this.failedLoginAttempts=0;
+        this.accountNonLocked=true;
     }
     public Long getId(){
         return id;
@@ -123,10 +149,9 @@ public class User implements UserDetails {
     public String getEmail(){
         return email;
     }
-    public void  setEmail(String email){
-        this.email=email;
+    public void setEmail(String email){
+        this.email=email !=null ? email.toLowerCase() : null;
     }
-    @Override
     public String getPassword(){
         return password;
     }
@@ -139,20 +164,53 @@ public class User implements UserDetails {
     public void setRole(Role role){
         this.role=role;
     }
-    public LocalDateTime getCreatedAt(){
-        return createdAt;
-    }
     public String getBio(){
         return bio;
     }
     public void setBio(String bio){
         this.bio=bio;
     }
-    public void SetCreatedAt(LocalDateTime createdAt){
-        this.createdAt=createdAt;
+    public boolean isEnabled(){
+        return enabled;
     }
-    public String getCreatedBy(){
-        return createdBy;
+    public void setEnabled(boolean enabled){
+        this.enabled=enabled;
+    }
+    public boolean isAccountNonLocked(){
+        return accountNonLocked;
+    }
+    public void setAccountNonLocked(boolean accountNonLocked){
+        this.accountNonLocked=accountNonLocked;
+    }
+    public int getFailedLoginAttempts(){
+        return failedLoginAttempts;
+    }
+    public void setFailedLoginAttempts(int failedLoginAttempts){
+        this.failedLoginAttempts=failedLoginAttempts;
+    }
+    public boolean isEmailVerified(){
+        return emailVerified;
+    }
+    public  void setEmailVerified(boolean emailVerified){
+        this.emailVerified=emailVerified;
+    }
+    public String getEmailVerificationToken(){
+        return emailVerificationToken;
+    }
+    public void setEmailVerificationToken(String emailVerificationToken) {
+        this.emailVerificationToken = emailVerificationToken;
+    }
+    public LocalDateTime getVerificationTokenExpiry(){
+        return verificationTokenExpiry;
+    }
+    public void setVerificationTokenExpiry(LocalDateTime verificationTokenExpiry) {
+        this.verificationTokenExpiry = verificationTokenExpiry;
+    }
+    public LocalDateTime getCreatedAt(){
+        return  createdAt;
+    }
+    public void setCreatedAt(LocalDateTime createdAt){
+        this.createdAt=createdAt;
     }
     public LocalDateTime getUpdatedAt(){
         return updatedAt;
@@ -160,41 +218,19 @@ public class User implements UserDetails {
     public void setUpdatedAt(LocalDateTime updatedAt){
         this.updatedAt=updatedAt;
     }
-    public LocalDateTime getUpdatedAtTime(){
-        return updatedAtTime;
+    public String getCreatedBy(){
+        return createdBy;
     }
-    public void setUpdatedAtTime(LocalDateTime updatedAtTime){
-        this.updatedAtTime=updatedAtTime;
+    public void setCreatedBy(String createdBy){
+        this.createdBy=createdBy;
     }
     public String getUpdatedBy(){
         return updatedBy;
     }
-    public void  setUpdatedBy(String updatedBy){
+    public void setUpdatedBy(String updatedBy){
         this.updatedBy=updatedBy;
     }
 
-    public void setRoleFromString(String roleString){
-        if(roleString !=null){
-            try {
-                this.role=Role.valueOf(roleString.toUpperCase());
-            }
-            catch (IllegalArgumentException e){
-                this.role=Role.USER;
-            }
-        }
-    }
-    @Override
-    public boolean equals(Object o){
-        if (this==o) return true;
-        if (o==null || getClass() !=o.getClass()) return false;
-
-        User user=(User) o;
-        return id !=null && id.equals(user.id);
-    }
-    @Override
-    public int hashCode(){
-        return id != null ? id.hashCode() : 0;
-    }
     @Override
     public String toString() {
         return "User{" +
@@ -205,10 +241,15 @@ public class User implements UserDetails {
                 ", role=" + role +
                 ", bio='" + bio + '\'' +
                 ", createdAt=" + createdAt +
-                ", createdBy='" + createdBy + '\'' +
                 ", updatedAt=" + updatedAt +
-                ", updatedAtTime=" + updatedAtTime +
                 ", updatedBy='" + updatedBy + '\'' +
+                ", createdBy='" + createdBy + '\'' +
+                ", enabled=" + enabled +
+                ", accountNonLocked=" + accountNonLocked +
+                ", failedLoginAttempts=" + failedLoginAttempts +
+                ", emailVerified=" + emailVerified +
+                ", emailVerificationToken='" + emailVerificationToken + '\'' +
+                ", verificationTokenExpiry=" + verificationTokenExpiry +
                 '}';
     }
 }
