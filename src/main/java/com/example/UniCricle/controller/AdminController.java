@@ -5,13 +5,13 @@ import com.example.UniCricle.Service.ClubService;
 import com.example.UniCricle.Service.EventService;
 import com.example.UniCricle.model.*;
 import com.example.UniCricle.model.enums.ClubRole;
-import com.example.UniCricle.model.enums.ClubStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequiredArgsConstructor
@@ -48,7 +48,7 @@ public class AdminController {
         return "redirect:/admin/users";
     }
 
-    // --- 3. EVENT MANAGEMENT (Restored) ---
+    // --- 3. EVENT MANAGEMENT ---
     @GetMapping("/events")
     public String manageEvents(Model model) {
         model.addAttribute("events", eventRepository.findAll());
@@ -66,17 +66,13 @@ public class AdminController {
         eventService.approveEvent(id);
         return "redirect:/admin/events";
     }
+
     @PostMapping("/events/create")
     public String saveEvent(@ModelAttribute("event") Event event) {
-        // Ensure status is approved since an admin is creating it
         event.setApproved(true);
-
-
-
         eventRepository.save(event);
         return "redirect:/admin/events";
     }
-
 
     @PostMapping("/events/delete/{id}")
     public String deleteEvent(@PathVariable Long id) {
@@ -84,7 +80,7 @@ public class AdminController {
         return "redirect:/admin/events";
     }
 
-    // --- 4. CHARITY MANAGEMENT (Restored) ---
+    // --- 4. CHARITY MANAGEMENT ---
     @GetMapping("/charity")
     public String manageCharity(Model model) {
         model.addAttribute("charities", charityRepository.findAll());
@@ -98,31 +94,23 @@ public class AdminController {
         charityRepository.save(charity);
         return "redirect:/admin/charity";
     }
+
     @GetMapping("/charity/create")
     public String showCreateCharityForm(Model model) {
-        model.addAttribute("charity", new Charity()); // This "charity" name must match th:object
+        model.addAttribute("charity", new Charity());
         return "admin/create-charity";
     }
 
     @PostMapping("/charity/create")
     public String saveCharity(@ModelAttribute("charity") Charity charity,
                               @AuthenticationPrincipal UserDetails userDetails) {
-
-        // 1. Get the current logged-in user from the database
         User admin = userRepository.findByUsername(userDetails.getUsername())
                 .orElseThrow(() -> new RuntimeException("User not found"));
-
-        // 2. Attach that user to the charity campaign
         charity.setCreatedBy(admin);
         charity.setApproved(true);
-
-        // 3. Save to database
         charityRepository.save(charity);
-
         return "redirect:/admin/charity";
     }
-
-
 
     @PostMapping("/charity/delete/{id}")
     public String deleteCharity(@PathVariable Long id) {
@@ -130,11 +118,11 @@ public class AdminController {
         return "redirect:/admin/charity";
     }
 
-    // --- 5. CLUB MANAGEMENT (UPGRADED WITH ROLE ASSIGNMENT) ---
+    // --- 5. CLUB MANAGEMENT ---
     @GetMapping("/clubs")
     public String manageClubs(Model model) {
         model.addAttribute("clubs", clubRepository.findAll());
-        model.addAttribute("users", userRepository.findAll()); // Required for leader assignment dropdowns
+        model.addAttribute("users", userRepository.findAll());
         return "admin/manage-clubs";
     }
 
@@ -157,16 +145,21 @@ public class AdminController {
 
     @PostMapping("/clubs/approve/{id}")
     public String approveClub(@PathVariable Long id, @RequestParam Long presidentId) {
-        // Approves a student's club request and assigns the Leader simultaneously
         clubService.approveClubRequest(id, presidentId, null);
         return "redirect:/admin/clubs";
     }
 
     @PostMapping("/clubs/delete/{id}")
-    public String deleteClub(@PathVariable Long id) {
-        clubService.deleteClub(id);
+    public String deleteClub(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        try {
+            clubService.deleteClub(id);
+            redirectAttributes.addFlashAttribute("success", "Club deleted successfully!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Could not delete club: " + e.getMessage());
+        }
         return "redirect:/admin/clubs";
     }
+
     @PostMapping("/clubs/assign-leaders/{id}")
     public String assignLeaders(@PathVariable Long id,
                                 @RequestParam(required = false) Long presidentId,
@@ -187,4 +180,5 @@ public class AdminController {
         clubRepository.save(club);
         return "redirect:/admin/clubs";
     }
+}
 }
