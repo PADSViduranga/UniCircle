@@ -1,0 +1,175 @@
+/* ==================== CORE VARIABLES ==================== */
+:root {
+    --primary: #00D084;
+    --accent: #4ECDC4;
+    --dark-bg: #0A1428;
+    --glass-bg: rgba(255, 255, 255, 0.04);
+    --border: rgba(255, 255, 255, 0.1);
+}
+
+/* ==================== GLOBAL SETTINGS ==================== */
+body {
+    /* Solid dark background matching the home page theme */
+    background: linear-gradient(rgba(10, 20, 40, 0.9), rgba(10, 20, 40, 0.9)),
+    url('/images/index.png') no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Inter', sans-serif;
+    color: #E8F5F0;
+    min-height: 100vh;
+}
+
+/* ==================== NAVBAR & BRANDING ==================== */
+.navbar {
+    background: rgba(10, 20, 40, 0.85) !important;
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 0;
+}
+
+.navbar-brand {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #fff !important;
+    text-shadow: 0 0 10px rgba(0, 208, 132, 0.8);
+    animation: brand-pulse 3s infinite alternate;
+}
+
+.navbar-brand span {
+    color: var(--primary);
+}
+
+@keyframes brand-pulse {
+    from { text-shadow: 0 0 10px rgba(0, 208, 132, 0.6); transform: scale(1); }
+    to { text-shadow: 0 0 20px rgba(0, 208, 132, 1); transform: scale(1.02); }
+}
+
+/* ==================== HEADER ==================== */
+.page-header {
+    padding: 3rem 0;
+}
+
+.page-title {
+    font-weight: 800;
+    font-size: 2.5rem;
+    color: #fff;
+    margin-bottom: 0.5rem;
+}
+
+.text-muted {
+    color: #A8B8C8 !important;
+}
+
+/* ==================== TABLE CARD (GLASS) ==================== */
+.table-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 1.5rem;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.table {
+    color: #E8F5F0 !important;
+    vertical-align: middle;
+}
+
+.table thead th {
+    color: var(--primary);
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 1.5px;
+    border-bottom: 2px solid var(--border);
+    padding: 1.5rem;
+}
+
+.table tbody tr {
+    transition: 0.3s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.06);
+    transform: scale(1.01);
+}
+
+.table td {
+    padding: 1.5rem;
+    border: none;
+    background: transparent !important; /* Overriding Bootstrap defaults */
+}
+
+/* ==================== DASHBOARD ELEMENTS ==================== */
+.event-name {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #fff;
+}
+
+.location-badge {
+    background: rgba(0, 208, 132, 0.1);
+    color: var(--primary);
+    padding: 6px 14px;
+    border-radius: 50px;
+    border: 1px solid rgba(0, 208, 132, 0.2);
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* ==================== BUTTONS ==================== */
+.btn-success {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    border: none;
+    color: var(--dark-bg) !important;
+    font-weight: 800;
+    border-radius: 50px;
+    padding: 0.8rem 1.8rem;
+    box-shadow: 0 0 15px rgba(0, 208, 132, 0.4);
+}
+
+.btn-success:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 208, 132, 0.6);
+}
+
+.btn-primary {
+    border: 1px solid var(--primary);
+    background: transparent;
+    color: var(--primary);
+    font-weight: 700;
+    border-radius: 50px;
+    padding: 0.5rem 1.5rem;
+}
+
+.btn-primary:hover {
+    background: var(--primary);
+    color: var(--dark-bg);
+    box-shadow: 0 0 20px rgba(0, 208, 132, 0.4);
+}
+
+.btn-outline-light {
+    border-radius: 50px;
+    padding: 0.4rem 1.2rem;
+    border: 1px solid var(--border);
+    color: #A8B8C8;
+}
+
+/* ==================== ANIMATIONS ==================== */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 1.5rem;
+    }
+}

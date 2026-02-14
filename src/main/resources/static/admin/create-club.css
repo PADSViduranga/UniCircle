@@ -1,0 +1,225 @@
+/* Custom Properties for Consistency */
+:root {
+    --bg-dark: #0f172a;
+    --card-bg: #1e293b;
+    --text-main: #f8fafc;
+    --text-dim: #94a3b8;
+    --neon-green: #10b981;
+    --neon-green-glow: rgba(16, 185, 129, 0.2);
+    --neon-red: #ef4444;
+    --neon-red-glow: rgba(239, 68, 68, 0.2);
+    --border-color: #334155;
+    --accent-blue: #3b82f6;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+.main-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Header & Action Bar */
+.top-bar h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    margin-bottom: 1.5rem;
+}
+
+.action-header {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* Table Design */
+.table-container {
+    background: var(--card-bg);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+thead {
+    background: #111827;
+}
+
+th {
+    padding: 16px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid var(--border-color);
+}
+
+td {
+    padding: 16px;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--border-color);
+}
+
+tr:hover {
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* Club Details & Typography */
+.club-name {
+    display: block;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.club-desc {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    margin-top: 4px;
+}
+
+.id-cell {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent-blue);
+    font-weight: bold;
+}
+
+/* Leadership Tags */
+.leadership-display {
+    margin-bottom: 10px;
+}
+
+.role-tag {
+    font-size: 0.85rem;
+    margin-bottom: 4px;
+}
+
+.role-tag strong {
+    color: var(--text-dim);
+}
+
+.unassigned {
+    color: #64748b;
+    font-style: italic;
+}
+
+/* Neon Inputs & Selects */
+.neon-select {
+    background: #0f172a;
+    border: 1px solid var(--border-color);
+    color: white;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    outline: none;
+    transition: border 0.2s;
+}
+
+.neon-select:focus {
+    border-color: var(--accent-blue);
+}
+
+/* Status Badges */
+.status-neon-approved, .status-neon-pending {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.status-neon-approved {
+    background: var(--neon-green-glow);
+    color: var(--neon-green);
+    border: 1px solid var(--neon-green);
+}
+
+.status-neon-pending {
+    background: rgba(245, 158, 11, 0.1);
+    color: #f59e0b;
+    border: 1px solid #f59e0b;
+}
+
+/* Professional Neon Buttons */
+.btn-create-neon {
+    background: var(--neon-green);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s;
+    box-shadow: 0 0 15px var(--neon-green-glow);
+}
+
+.btn-create-neon:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 0 20px var(--neon-green);
+}
+
+.btn-approve-neon {
+    background: transparent;
+    border: 1px solid var(--neon-green);
+    color: var(--neon-green);
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-approve-neon:hover {
+    background: var(--neon-green);
+    color: #fff;
+}
+
+.btn-delete-neon {
+    background: transparent;
+    border: 1px solid var(--neon-red);
+    color: var(--neon-red);
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-delete-neon:hover {
+    background: var(--neon-red);
+    color: #fff;
+    box-shadow: 0 0 10px var(--neon-red-glow);
+}
+
+.btn-mini-neon {
+    background: var(--accent-blue);
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.75rem;
+}
+
+/* Layout Utilities */
+.inline-form {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.action-cell {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-start;
+}

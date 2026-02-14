@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard - Manage Users</title>
+    <link th:href="@{/admin/manage-users.css}" rel="stylesheet"/>
+</head>
+<body>
+<h1>Admin - Manage Users</h1>
+
+<table border="1" cellpadding="10">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Account Locked</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.username}"></td>
+        <td th:text="${user.email}"></td>
+        <td th:text="${user.role}"></td>
+        <td th:text="${user.accountLocked}"></td>
+        <td>
+            <form th:action="@{'/admin/users/delete/' + ${user.id}}" method="post"
+                  onsubmit="return confirm('Are you sure you want to delete this user?');">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<a th:href="@{/admin/dashboard}">Back to Dashboard</a>
+</body>
+</html>

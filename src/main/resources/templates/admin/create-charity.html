@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Charity</title>
+    <link rel="stylesheet" th:href="@{/admin/create-charity.css}">
+</head>
+<body>
+<h1>Create Charity</h1>
+
+<form th:action="@{/admin/charity/create}" th:object="${charity}" method="post">
+    <label for="title">Title:</label><br>
+    <input type="text" id="title" th:field="*{title}" required><br><br>
+
+    <label for="description">Description:</label><br>
+    <textarea id="description" th:field="*{description}" rows="4" cols="50" required></textarea><br><br>
+
+    <label for="points">Points:</label><br>
+    <input type="number" id="points" th:field="*{points}" min="0" required><br><br>
+
+    <button type="submit">Create Charity</button>
+</form>
+
+<a th:href="@{/admin/charity}">Back to Manage Charity</a>
+</body>
+</html>
