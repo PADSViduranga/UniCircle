@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Meetings</title>
+    <link rel="stylesheet" th:href="@{/css/meeting.css}">
+</head>
+<body>
+<h1>All Meetings</h1>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Topic</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="m : ${meetings}">
+        <td th:text="${m.id}"></td>
+        <td th:text="${m.topic}"></td>
+        <td th:text="${m.description}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>Create Meeting</h2>
+<form th:action="@{/meetings/create}" method="post">
+    Topic: <input type="text" name="topic" required/><br/>
+    Description: <input type="text" name="description" required/><br/>
+    <button type="submit">Create</button>
+</form>
+
+<h2>Attend Meeting</h2>
+<form th:action="@{/meetings/attend}" method="post">
+    <button type="submit">Attend</button>
+</form>
+
+<br/>
+<a th:href="@{/dashboard}">Back to Dashboard</a>
+
+<footer>
+    <p>&copy; 2024 NSBM Student Management System. All rights reserved.</p>
+</footer>
+</body>
+</html>

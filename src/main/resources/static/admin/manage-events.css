@@ -1,0 +1,126 @@
+:root {
+    --primary: #00D084;
+    --accent: #4ECDC4;
+    --dark-bg: #0A1428;
+    --glass-bg: rgba(255, 255, 255, 0.04);
+    --border: rgba(255, 255, 255, 0.1);
+    --danger: #FF4B5C;
+    --warning: #FFB300;
+}
+
+/* ==================== GLOBAL SETTINGS ==================== */
+body {
+    background-color: var(--dark-bg);
+    font-family: 'Inter', sans-serif;
+    color: #E8F5F0;
+    margin: 0;
+    padding: 40px 5%;
+}
+
+.admin-title {
+    font-family: 'Poppins';
+    font-weight: 800;
+    font-size: 2.5rem;
+    margin-bottom: 5px;
+}
+
+.admin-title span { color: var(--primary); }
+
+/* ==================== BUTTONS ==================== */
+.btn-create {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: var(--dark-bg);
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-weight: 700;
+    text-decoration: none;
+    margin: 20px 0;
+    transition: 0.3s;
+    box-shadow: 0 5px 15px rgba(0, 208, 132, 0.2);
+}
+
+.btn-create:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0, 208, 132, 0.4); }
+
+/* ==================== TABLE GLASS STYLING ==================== */
+.table-wrapper {
+    background: var(--glass-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    text-align: left;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.02);
+    color: var(--primary);
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 1.5px;
+    border-bottom: 1px solid var(--border);
+}
+
+td { padding: 20px; border-bottom: 1px solid var(--border); }
+
+tr:hover { background: rgba(255, 255, 255, 0.03); }
+
+/* ==================== STATUS BADGES ==================== */
+.badge-approved {
+    background: rgba(0, 208, 132, 0.1);
+    color: var(--primary);
+    padding: 5px 12px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    border: 1px solid var(--primary);
+}
+
+.badge-pending {
+    background: rgba(255, 179, 0, 0.1);
+    color: var(--warning);
+    padding: 5px 12px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    border: 1px solid var(--warning);
+}
+
+/* ==================== ACTION BUTTONS ==================== */
+.btn-group { display: flex; gap: 10px; }
+
+button {
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+    border: none;
+}
+
+.btn-approve {
+    background: var(--primary);
+    color: var(--dark-bg);
+}
+
+.btn-approve:hover { filter: brightness(1.2); transform: scale(1.05); }
+
+.btn-remove {
+    background: transparent;
+    border: 1px solid var(--danger) !important;
+    color: var(--danger);
+}
+
+.btn-remove:hover {
+    background: var(--danger);
+    color: white;
+    box-shadow: 0 0 15px rgba(255, 75, 92, 0.4);
+}
+
+.desc-cell { color: #A8B8C8; font-size: 0.9rem; max-width: 300px; }

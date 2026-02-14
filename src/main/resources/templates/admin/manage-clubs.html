@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Club Management | NSBM Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/admin/manage-club.css}">
+</head>
+<body>
+
+<div class="container">
+    <header class="header-section">
+        <div class="header-left">
+            <div class="header-nav-group">
+                <a th:href="@{/admin/dashboard}" class="back-nav-link" title="Back to Dashboard">
+                    <div class="btn-back">
+                        <i class="fas fa-chevron-left
+"></i>
+                    </div>
+                    <nav class="breadcrumb">
+                        <span>Dashboard</span>
+                        <span>/</span>
+                        <span class="current-page">Club Management</span>
+                    </nav>
+                </a>
+            </div>
+            <h1>Club Management</h1>
+        </div>
+
+        <div class="header-right">
+            <a th:href="@{/admin/clubs/create}" class="btn-primary">
+                <i class="fas fa-plus"></i>
+                <span>Create New Club</span>
+            </a>
+        </div>
+    </header>
+
+    <div class="data-card">
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Club Information</th>
+                    <th>Leadership</th>
+                    <th>Created By</th>
+                    <th>Status</th>
+                    <th style="text-align: right;">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="club : ${clubs}">
+                    <td>
+                        <span class="id-badge" th:text="${club.id}"></span>
+                    </td>
+
+                    <td>
+                        <span class="club-name" th:text="${club.name}"></span>
+                        <span class="club-description" th:text="${club.description}"></span>
+                    </td>
+
+                    <td>
+                        <div class="leadership-info">
+                            <div class="role-row">
+                                <span class="role-label">P</span>
+                                <span th:text="${club.president != null ? club.president.username : 'Unassigned'}"
+                                      th:classappend="${club.president == null ? 'role-value unassigned' : 'role-value'}"></span>
+                            </div>
+                            <div class="role-row">
+                                <span class="role-label">VP</span>
+                                <span th:text="${club.vicePresident != null ? club.vicePresident.username : 'Unassigned'}"
+                                      th:classappend="${club.vicePresident == null ? 'role-value unassigned' : 'role-value'}"></span>
+                            </div>
+                        </div>
+
+                        <div th:if="${club.status.name() == 'APPROVED'}" class="assign-form">
+                            <form th:action="@{'/admin/clubs/assign-leaders/' + ${club.id}}" method="post">
+                                <div class="form-grid">
+                                    <select name="presidentId" class="form-select">
+                                        <option value="">Update P</option>
+                                        <option th:each="u : ${users}" th:value="${u.id}" th:text="${u.username}"></option>
+                                    </select>
+                                    <select name="vicePresidentId" class="form-select">
+                                        <option value="">Update VP</option>
+                                        <option th:each="u : ${users}" th:value="${u.id}" th:text="${u.username}"></option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn-submit-sm">Update Leadership</button>
+                            </form>
+                        </div>
+                    </td>
+
+                    <td>
+                        <span class="role-value" th:text="${club.createdBy != null ? club.createdBy.username : 'System Admin'}"></span>
+                    </td>
+
+                    <td>
+                            <span th:text="${club.status}"
+                                  th:classappend="${club.status.name() == 'APPROVED' ? 'status-tag approved' : 'status-tag pending'}">
+                            </span>
+                    </td>
+
+                    <td>
+                        <div class="action-group" style="justify-content: flex-end;">
+                            <form th:if="${club.status.name() == 'PENDING'}"
+                                  th:action="@{'/admin/clubs/approve/' + ${club.id}}" method="post" style="display: flex; gap: 0.5rem;">
+                                <select name="presidentId" class="form-select" style="width: 140px;" required>
+                                    <option value="">Select President</option>
+                                    <option th:each="u : ${users}" th:value="${u.id}" th:text="${u.username}"></option>
+                                </select>
+                                <button type="submit" class="btn-icon" title="Approve & Assign">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                            </form>
+
+                            <form th:action="@{'/admin/clubs/delete/' + ${club.id}}" method="post"
+                                  onsubmit="return confirm('Are you sure you want to permanently delete this club?');">
+                                <button type="submit" class="btn-icon delete" title="Delete Club">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr th:if="${#lists.isEmpty(clubs)}">
+                    <td colspan="6" style="text-align: center; padding: 3rem;">
+                        No records found.
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 NSBM <strong>Green Circle</strong> Administration Portal</p>
+    </footer>
+</div>
+
+</body>
+</html>
