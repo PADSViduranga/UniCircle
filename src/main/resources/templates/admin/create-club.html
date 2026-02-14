@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create New Club | NSBM Admin</title>
+    <link rel="stylesheet" th:href="@{/admin/create-club.css}">
+</head>
+<body>
+
+<div class="main-content">
+    <header class="top-bar">
+        <h1>Create New Club</h1>
+    </header>
+
+    <div class="table-container" style="padding: 30px;">
+        <form th:action="@{/admin/clubs/create}" th:object="${club}" method="post">
+
+            <div class="role-tag" style="margin-bottom: 20px;">
+                <label><strong>Club Name</strong></label><br>
+                <input type="text" th:field="*{name}" class="neon-select" style="width: 100%;" required>
+            </div>
+
+            <div class="role-tag" style="margin-bottom: 20px;">
+                <label><strong>Club Description</strong></label><br>
+                <textarea th:field="*{description}" class="neon-select" style="width: 100%; height: 100px;"></textarea>
+            </div>
+
+            <div class="role-tag" style="margin-bottom: 20px;">
+                <label><strong>Assign President</strong></label><br>
+                <select name="presidentId" class="neon-select" style="width: 100%;" required>
+                    <option value="">-- Select President --</option>
+                    <option th:each="user : ${users}"
+                            th:value="${user.id}"
+                            th:text="${user.username}"></option>
+                </select>
+            </div>
+
+            <div class="role-tag" style="margin-bottom: 20px;">
+                <label><strong>Assign Vice President</strong></label><br>
+                <select name="vicePresidentId" class="neon-select" style="width: 100%;" required>
+                    <option value="">-- Select Vice President --</option>
+                    <option th:each="user : ${users}"
+                            th:value="${user.id}"
+                            th:text="${user.username}"></option>
+                </select>
+            </div>
+
+            <div class="action-cell">
+                <button type="submit" class="btn-create-neon" style="border: none; width: 100%; cursor: pointer; padding: 15px;">
+                    <i class="fas fa-save"></i> Save and Launch Club
+                </button>
+            </div>
+        </form>
+
+        <div style="margin-top: 20px; text-align: center;">
+            <a th:href="@{/admin/clubs}" style="color: var(--neon-red); text-decoration: none;">Cancel and Go Back</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
