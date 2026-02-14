@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Events - UniCircle Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/admin/manage-events.css}">
+</head>
+<body>
+
+<div class="admin-container">
+    <h2 class="admin-title">Manage <span>Events</span></h2>
+
+    <div class="action-bar">
+        <a href="/admin/events/create" class="btn-create">
+            <span class="icon">+</span> Create New Event
+        </a>
+    </div>
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Event Title</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th class="text-right">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="event : ${events}">
+                <td class="id-cell" th:text="${event.id}"></td>
+                <td class="title-cell" th:text="${event.title}"></td>
+                <td class="desc-cell" th:text="${event.description}"></td>
+                <td>
+                            <span th:class="${event.approved} ? 'badge-approved' : 'badge-pending'"
+                                  th:text="${event.approved} ? 'Approved' : 'Pending'">
+                            </span>
+                </td>
+                <td class="actions-cell">
+                    <div class="btn-group">
+                        <form th:action="@{/admin/events/approve/{id}(id=${event.id})}" method="post" th:if="${!event.approved}">
+                            <button type="submit" class="btn-approve">Approve</button>
+                        </form>
+
+                        <form th:action="@{/admin/events/delete/{id}(id=${event.id})}" method="post">
+                            <button type="submit" class="btn-remove" onclick="return confirm('Are you sure you want to remove this event?')">Remove</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

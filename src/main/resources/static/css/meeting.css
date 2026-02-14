@@ -1,0 +1,145 @@
+:root {
+    --nsbm-green: #00D084;
+    --nsbm-green-dark: #009B5F;
+    --nsbm-green-glow: rgba(0, 208, 132, 0.4);
+    --bg-dark-1: #0A1428;
+    --bg-dark-2: #1a2332;
+    --card-bg-1: #1a2332;
+    --card-bg-2: #2d3d4d;
+    --text-primary: #E8F5F0;
+    --text-secondary: #A8B8C8;
+    --border-color: rgba(0, 208, 132, 0.2);
+}
+
+/* ==================== LAYOUT ==================== */
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, var(--bg-dark-1) 0%, var(--bg-dark-2) 100%);
+    color: var(--text-primary);
+    margin: 0;
+    padding: 40px 20px 100px; /* Extra bottom padding for footer */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1, h2 {
+    color: var(--text-primary);
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+/* ==================== TABLE ANIMATION ==================== */
+table {
+    width: 90%;
+    max-width: 1000px;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+    margin-bottom: 40px;
+}
+
+th {
+    color: var(--nsbm-green);
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    padding: 15px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+td {
+    background-color: var(--card-bg-1);
+    padding: 15px;
+    text-align: center;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+td:first-child { border-left: 1px solid var(--border-color); border-radius: 10px 0 0 10px; }
+td:last-child { border-right: 1px solid var(--border-color); border-radius: 0 10px 10px 0; }
+
+/* The "One by One" Drop Animation */
+@keyframes dropDown {
+    0% { opacity: 0; transform: translateY(-20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+tbody tr {
+    opacity: 0; /* Hidden initially */
+    animation: dropDown 0.5s ease-out forwards;
+}
+
+/* Staggered timing for up to 10 rows */
+tbody tr:nth-child(1) { animation-delay: 0.1s; }
+tbody tr:nth-child(2) { animation-delay: 0.2s; }
+tbody tr:nth-child(3) { animation-delay: 0.3s; }
+tbody tr:nth-child(4) { animation-delay: 0.4s; }
+tbody tr:nth-child(5) { animation-delay: 0.5s; }
+
+/* ==================== FORMS & INPUTS ==================== */
+form {
+    background: var(--card-bg-2);
+    padding: 25px;
+    border-radius: 15px;
+    border: 1px solid var(--border-color);
+    width: 100%;
+    max-width: 500px;
+    margin-bottom: 30px;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0 20px;
+    background: var(--bg-dark-1);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: white;
+    outline: none;
+}
+
+input[type="text"]:focus {
+    border-color: var(--nsbm-green);
+}
+
+button {
+    background: linear-gradient(135deg, var(--nsbm-green) 0%, var(--nsbm-green-dark) 100%);
+    color: var(--bg-dark-1);
+    border: none;
+    padding: 10px 25px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px var(--nsbm-green-glow);
+}
+
+/* ==================== FOOTER ==================== */
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(10, 20, 40, 0.95);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--border-color);
+    padding: 15px 0;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* ==================== NAVIGATION ==================== */
+a {
+    color: var(--nsbm-green);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+a:hover {
+    text-decoration: underline;
+}
