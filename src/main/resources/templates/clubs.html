@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clubs - UniCircle</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/clubs.css}">
+    <link rel="stylesheet" href="clubs.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+        <a class="navbar-brand" href="/dashboard">UniCircle</a>
+        <div class="ms-auto d-flex align-items-center">
+            <span class="text-white me-3 d-none d-md-inline">Welcome, <b th:text="${username}">User</b></span>
+            <a class="btn btn-outline-danger btn-sm" href="/logout">Logout</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>University Clubs</h2>
+        <div sec:authorize="hasRole('ADMIN') or hasRole('SUPER_ADMIN')">
+            <a class="btn btn-success" href="/clubs/create">
+                <i class="bi bi-plus-circle me-2"></i>Create New Club
+            </a>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-4 col-sm-6" th:each="club : ${clubs}">
+            <div class="club-card">
+                <div class="club-card-header">
+                    <div class="club-icon">
+                        <i class="bi bi-people-fill"></i>
+                    </div>
+                    <span class="member-count">
+                        <i class="bi bi-person-check-fill me-1"></i>
+                        <span th:text="${club.memberCount}">0</span> Members
+                    </span>
+                </div>
+                <div class="club-card-body">
+                    <h4 class="club-title" th:text="${club.name}">Club Name</h4>
+                    <p class="club-description" th:text="${club.description}">This is a brief description of the club and its activities at NSBM Green University.</p>
+                </div>
+                <div class="club-card-footer">
+                    <h5 th:text="${club.name}"></h5>
+                    <a th:href="@{/clubs/view/{id}(id=${club.id})}" class="btn btn-primary">
+                        View Details
+                    </a>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 text-center py-5" th:if="${#lists.isEmpty(clubs)}">
+            <div class="opacity-50 mb-3">
+                <i class="bi bi-search" style="font-size: 3rem;"></i>
+            </div>
+            <h5 class="text-secondary">No clubs found at the moment.</h5>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${club.name} + ' | UniCircle'">Club View</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        .club-header { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); color: white; border-radius: 0 0 2rem 2rem; }
+        .card { border: none; border-radius: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .feature-icon { width: 50px; height: 50px; background: #f3f4f6; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #6366f1; font-size: 1.5rem; }
+    </style>
+</head>
+<body class="bg-light">
+
+<div class="club-header py-5 mb-4 shadow">
+    <div class="container text-center">
+        <h1 class="display-5 fw-bold" th:text="${club.name}">Club Name</h1>
+        <p class="lead opacity-75" th:text="${club.description}">Description</p>
+
+        <span th:if="${isApproved}" class="badge bg-white text-primary rounded-pill px-3 py-2">
+            <i class="bi bi-patch-check-fill me-1"></i> Official Member
+        </span>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row justify-content-center">
+
+        <div class="col-lg-10" th:if="${isApproved}">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card p-4 mb-4">
+                        <h5 class="fw-bold mb-3">Club Info</h5>
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="bi bi-person-badge me-3 fs-4 text-primary"></i>
+                            <div>
+                                <small class="text-muted d-block">Your Status</small>
+                                <strong>Active Member</strong>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-star me-3 fs-4 text-warning"></i>
+                            <div>
+                                <small class="text-muted d-block">Points Earned</small>
+                                <strong>10 XP</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="/clubs" class="btn btn-outline-secondary w-100 rounded-pill">
+                        <i class="bi bi-arrow-left me-2"></i>Back to Clubs
+                    </a>
+                </div>
+
+                <div class="col-md-8">
+                    <div class="card p-4 mb-4">
+                        <h5 class="fw-bold mb-3"><i class="bi bi-megaphone me-2"></i>Announcements</h5>
+                        <div class="alert alert-info border-0 shadow-sm">
+                            Welcome to the club! Check back here for updates from your Club Leader.
+                        </div>
+                    </div>
+
+                    <div class="card p-4">
+                        <h5 class="fw-bold mb-3"><i class="bi bi-calendar-event me-2"></i>Upcoming Events</h5>
+                        <div class="text-center py-4">
+                            <img src="https://cdn-icons-png.flaticon.com/512/2693/2693507.png" width="80" class="mb-3 opacity-50">
+                            <p class="text-muted">No events scheduled yet. Stay tuned!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6" th:if="${pendingMessage != null && !isApproved}">
+            <div class="card p-5 text-center shadow-lg">
+                <i class="bi bi-hourglass-split text-warning display-1 mb-4"></i>
+                <h2 class="fw-bold">Almost There!</h2>
+                <p class="text-muted mb-4" th:text="${pendingMessage}">Your application is pending.</p>
+                <div class="progress mb-4" style="height: 10px;">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" style="width: 75%"></div>
+                </div>
+                <a href="/clubs" class="btn btn-light rounded-pill">Back to Clubs</a>
+            </div>
+        </div>
+
+        <div class="col-md-6" th:if="${pendingMessage == null && !isApproved}">
+            <div class="card p-5 text-center shadow-lg">
+                <i class="bi bi-plus-circle text-primary display-1 mb-4"></i>
+                <h2 class="fw-bold">Join this Club</h2>
+                <p class="text-muted mb-4">Become a member to access events and earn activity points!</p>
+
+                <form th:action="@{/clubs/join/{id}(id=${club.id})}" method="post">
+                    <button type="submit" class="btn btn-primary btn-lg w-100 rounded-pill shadow">
+                        Apply to Join
+                    </button>
+                </form>
+                <a href="/clubs" class="btn btn-link mt-3 text-secondary text-decoration-none">Cancel</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

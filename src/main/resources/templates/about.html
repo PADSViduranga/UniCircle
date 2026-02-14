@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>About Us | UniCircle</title>
+</head>
+<body>
+
+<center>
+    <header>
+        <h1>UniCircle</h1>
+        <h3>Connecting Campus, One Circle at a Time</h3>
+        <hr width="50%">
+    </header>
+</center>
+
+<section>
+    <h2>Our Mission</h2>
+    <p>
+        UniCircle is a comprehensive university management platform designed to centralize student activities.
+        Our goal is to provide a single space where students can manage their <b>Clubs</b>, participate in
+        <b>Events</b>, and contribute to <b>Charity</b> campaigns without the hassle of multiple fragmented systems.
+    </p>
+</section>
+
+<br>
+
+<section>
+    <h2>What We Do</h2>
+    <table border="1" cellpadding="10" cellspacing="0" width="100%">
+        <thead>
+        <tr bgcolor="#eeeeee">
+            <th>Feature</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><b>Club Management</b></td>
+            <td>Tools for Presidents and Vice-Presidents to manage memberships and approvals.</td>
+        </tr>
+        <tr>
+            <td><b>Event Coordination</b></td>
+            <td>A centralized calendar for all university events with easy registration.</td>
+        </tr>
+        <tr>
+            <td><b>Charity & Volunteering</b></td>
+            <td>Points-based system to encourage students to give back to the community.</td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+
+<br>
+
+<section>
+    <h2>The Development Team</h2>
+    <ul>
+        <li><b>Backend Architecture:</b> Spring Boot, Spring Security, and JPA.</li>
+        <li><b>Frontend Integration:</b> Thymeleaf Template Engine and HTML5.</li>
+        <li><b>Database Design:</b> Relational data mapping for Users, Clubs, and Events.</li>
+    </ul>
+</section>
+
+<br>
+
+<nav>
+    <h3>Quick Links</h3>
+    <ul>
+        <li><a th:href="@{/}">Back to Home</a></li>
+        <li><a th:href="@{/login}">Login to Dashboard</a></li>
+        <li><a th:href="@{/register}">Join the Community</a></li>
+    </ul>
+</nav>
+
+<hr>
+
+<footer>
+    <center>
+        <p>&copy; 2026 UniCircle University System. All Rights Reserved.</p>
+    </center>
+</footer>
+
+</body>
+</html>

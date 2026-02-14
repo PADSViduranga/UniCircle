@@ -1,0 +1,273 @@
+/* ==================== NSBM ADMIN DASHBOARD STYLES ==================== */
+
+:root {
+    --nsbm-green: #00D084;
+    --nsbm-green-dark: #009B5F;
+    --nsbm-green-glow: rgba(0, 208, 132, 0.4);
+    --bg-dark-1: #0A1428;
+    --bg-dark-2: #1a2332;
+    --sidebar-bg: #070d1a;
+    --card-bg: #1a2332;
+    --card-bg-hover: #252f3f;
+    --text-primary: #E8F5F0;
+    --text-secondary: #A8B8C8;
+    --border-color: rgba(0, 208, 132, 0.15);
+    --transition-speed: 0.4s;
+}
+
+/* ==================== GLOBAL STYLES ==================== */
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-dark-1);
+    color: var(--text-primary);
+    margin: 0;
+    overflow-x: hidden;
+}
+
+/* ==================== SIDEBAR ==================== */
+.sidebar {
+    width: 280px;
+    height: 100vh;
+    background: var(--sidebar-bg);
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+    transition: transform var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+    border-right: 1px solid var(--border-color);
+    padding: 2rem 1.5rem;
+}
+
+.sidebar.collapsed {
+    transform: translateX(-100%);
+}
+
+.sidebar h3 {
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 3rem;
+    color: var(--nsbm-green);
+    text-shadow: 0 0 15px var(--nsbm-green-glow);
+}
+
+.sidebar a {
+    display: flex;
+    align-items: center;
+    padding: 0.85rem 1.25rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-radius: 12px;
+    margin-bottom: 0.5rem;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    position: relative;
+    overflow: hidden;
+}
+
+.sidebar a:hover, .sidebar a.active {
+    background: rgba(0, 208, 132, 0.1);
+    color: var(--nsbm-green);
+    transform: translateX(5px);
+}
+
+.sidebar a i {
+    width: 24px;
+    font-size: 1.1rem;
+}
+
+/* ==================== MAIN CONTENT ==================== */
+.main-content {
+    margin-left: 280px;
+    padding: 2rem 3rem;
+    min-height: 100vh;
+    transition: margin-left var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    animation: fadeIn 0.8s ease-out;
+}
+
+.main-content.expanded {
+    margin-left: 0;
+}
+
+/* ==================== TOP BAR & HAMBURGER ==================== */
+.top-bar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2.5rem;
+}
+
+#sidebarToggle {
+    background: none;
+    border: 1px solid var(--border-color);
+    color: var(--nsbm-green);
+    font-size: 1.25rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-right: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+#sidebarToggle:hover {
+    background: rgba(0, 208, 132, 0.1);
+    box-shadow: 0 0 15px var(--nsbm-green-glow);
+    transform: rotate(90deg);
+}
+
+/* ==================== STAT CARDS ==================== */
+.card-counter {
+    background: linear-gradient(135deg, var(--card-bg) 0%, #252f3f 100%);
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    animation: float 6s ease-in-out infinite;
+}
+
+.card-counter:nth-child(2) { animation-delay: 1s; }
+.card-counter:nth-child(3) { animation-delay: 2s; }
+.card-counter:nth-child(4) { animation-delay: 3s; }
+
+.card-counter:hover {
+    transform: translateY(-15px) scale(1.02);
+    border-color: var(--nsbm-green);
+    box-shadow: 0 20px 40px rgba(0, 208, 132, 0.2);
+}
+
+.card-counter::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(0, 208, 132, 0.05) 0%, transparent 70%);
+    animation: rotateGlow 10s linear infinite;
+    pointer-events: none;
+}
+
+.card-counter h3 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    color: var(--nsbm-green);
+    text-shadow: 0 0 20px rgba(0, 208, 132, 0.3);
+}
+
+.card-counter span {
+    color: var(--text-secondary);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 1.5px;
+}
+
+/* ==================== QUICK ACTION CARDS ==================== */
+.action-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 2rem;
+    text-decoration: none;
+    color: var(--text-primary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    width: 220px;
+    margin: 1rem;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.action-card:hover {
+    background: var(--card-bg-hover);
+    border-color: var(--nsbm-green);
+    transform: translateY(-10px);
+    color: var(--nsbm-green);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+}
+
+.action-card i {
+    font-size: 2.5rem;
+    margin-bottom: 1.25rem;
+    transition: transform 0.3s ease;
+}
+
+.action-card:hover i {
+    transform: scale(1.2) rotate(5deg);
+}
+
+.action-card span {
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+/* ==================== FOOTER ==================== */
+footer {
+    margin-top: auto;
+    padding: 3rem 0;
+    border-top: 1px solid var(--border-color);
+    text-align: center;
+    color: var(--text-secondary);
+}
+
+footer span {
+    color: var(--nsbm-green);
+    font-weight: 700;
+    animation: pulse 2s infinite;
+    display: inline-block;
+}
+
+/* ==================== ANIMATIONS ==================== */
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes rotateGlow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 992px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+    .sidebar.active {
+        transform: translateX(0);
+    }
+    .main-content {
+        margin-left: 0;
+        padding: 1.5rem;
+    }
+    .action-card {
+        width: calc(50% - 2rem);
+    }
+}
+
+@media (max-width: 576px) {
+    .action-card {
+        width: 100%;
+        margin: 0.5rem 0;
+    }
+}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | UniCircle NSBM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+</head>
+<body class="auth-wrapper">
+
+<div class="auth-card">
+    <div class="auth-header">
+        <h3 class="fw-bold mb-0">Uni<span class="text-success">Circle</span></h3>
+        <small class="opacity-75">Student Login Portal</small>
+    </div>
+
+    <div th:if="${param.error}" class="alert alert-danger py-2 small">
+        <span th:text="${session.errorMessage != null ? session.errorMessage : 'Invalid username or password.'}"></span>
+    </div>
+
+    <div th:if="${param.logout}" class="alert alert-success py-2 small">
+        You have been logged out.
+    </div>
+
+    <form th:action="@{/login}" method="post">
+        <div class="mb-3">
+            <label class="form-label small fw-bold text-muted">Username</label>
+            <input class="form-control-custom" name="username" placeholder="Enter your username" required autofocus>
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label small fw-bold text-muted">Password</label>
+            <input class="form-control-custom" type="password" name="password" placeholder="••••••••" required>
+        </div>
+
+        <button class="btn btn-nsbm-auth shadow-sm">Sign In</button>
+    </form>
+
+    <div class="text-center mt-4">
+        <span class="text-muted small">New to UniCircle?</span>
+        <a th:href="@{/register}" class="text-success fw-bold small text-decoration-none">Create Account</a>
+    </div>
+</div>
+
+</body>
+</html>

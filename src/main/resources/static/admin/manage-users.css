@@ -1,0 +1,141 @@
+/* ==================== NSBM CLUB TABLE STYLES ==================== */
+
+:root {
+    --nsbm-green: #00D084;
+    --nsbm-green-dark: #009B5F;
+    --nsbm-green-glow: rgba(0, 208, 132, 0.4);
+    --bg-dark-1: #0A1428;
+    --bg-dark-2: #1a2332;
+    --card-bg: #1a2332;
+    --text-primary: #E8F5F0;
+    --text-secondary: #A8B8C8;
+    --border-color: rgba(0, 208, 132, 0.15);
+    --danger-red: #ff4d4d;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-dark-1);
+    color: var(--text-primary);
+    margin: 0;
+    padding: 3rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    font-weight: 800;
+    color: var(--nsbm-green);
+    text-transform: uppercase;
+    letter-spacing: -1px;
+    margin-bottom: 2rem;
+}
+
+/* ==================== CREATE BUTTON ==================== */
+a[href*="create"] {
+    text-decoration: none;
+    background: linear-gradient(135deg, var(--nsbm-green) 0%, var(--nsbm-green-dark) 100%);
+    color: var(--bg-dark-1);
+    padding: 0.7rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+/* ==================== TABLE DESIGN ==================== */
+table {
+    width: 100%;
+    max-width: 1000px;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+}
+
+th {
+    color: var(--nsbm-green);
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 2px solid var(--border-color);
+}
+
+td {
+    background: var(--card-bg);
+    padding: 1.2rem;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Row Rounding & Rank Color */
+td:first-child { border-left: 1px solid var(--border-color); border-radius: 12px 0 0 12px; color: var(--nsbm-green); font-weight: bold; }
+td:last-child { border-right: 1px solid var(--border-color); border-radius: 0 12px 12px 0; }
+
+/* ==================== ONE-BY-ONE ANIMATION ==================== */
+tbody tr {
+    opacity: 0;
+    animation: tableReveal 0.5s ease-out forwards;
+}
+
+@keyframes tableReveal {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+tbody tr:nth-child(1) { animation-delay: 0.1s; }
+tbody tr:nth-child(2) { animation-delay: 0.2s; }
+tbody tr:nth-child(3) { animation-delay: 0.3s; }
+
+/* ==================== DELETE BUTTON ==================== */
+button[type="submit"] {
+    background: transparent;
+    border: 1px solid var(--danger-red);
+    color: var(--danger-red);
+    padding: 6px 18px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background: var(--danger-red);
+    color: white;
+}
+
+/* ==================== THE "BACK TO DASHBOARD" BUTTON ==================== */
+/* Targeted the <a> tag specifically for the back button */
+a[href*="dashboard"] {
+    margin-top: 3rem;
+    text-decoration: none;
+    /* Solid Green Gradient to match the Dashboard style */
+    background: linear-gradient(135deg, var(--nsbm-green) 0%, var(--nsbm-green-dark) 100%);
+    color: var(--bg-dark-1); /* Dark text on green background */
+    padding: 12px 30px;
+    border-radius: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 4px 15px var(--nsbm-green-glow);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+a[href*="dashboard"]:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px var(--nsbm-green-glow);
+    filter: brightness(1.1);
+}
+
+/* Optional: Add a back arrow icon via CSS if not in HTML */
+a[href*="dashboard"]::before {
+    content: '←';
+    font-size: 1.2rem;
+    font-weight: bold;
+}

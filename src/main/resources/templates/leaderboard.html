@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Leaderboard</title>
+    <link rel="stylesheet" th:href="@{/css/leaderboard.css}">
+</head>
+<body>
+<h1>Leaderboard</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Rank</th>
+        <th>Username</th>
+        <th>Points</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Loop through users and display rank -->
+    <tr th:each="user, iterStat : ${users}">
+        <td th:text="${iterStat.count}">1</td>
+        <td th:text="${user.username}">Username</td>
+        <td th:text="${user.points}">0</td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="back-link">
+    <a href="/dashboard">Back to Dashboard</a>
+</div>
+</body>
+</html>

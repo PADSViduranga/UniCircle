@@ -1,0 +1,11 @@
+package com.example.UniCricle.Repository;
+
+import com.example.UniCricle.model.Event;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+public interface EventRepository extends JpaRepository<Event, Long> {
+    List<Event> findByApproved(boolean approved);
+}
