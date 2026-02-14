@@ -1,0 +1,123 @@
+:root {
+    --primary: #00D084;
+    --accent: #4ECDC4;
+    --dark-bg: #0A1428;
+    --glass-bg: rgba(255, 255, 255, 0.04);
+    --border: rgba(255, 255, 255, 0.1);
+    --point-glow: rgba(0, 208, 132, 0.4);
+}
+
+/* ==================== GLOBAL SETTINGS ==================== */
+body {
+    /* Using the dark theme colors consistently */
+    background: radial-gradient(circle at top right, #112240, #0A1428);
+    font-family: 'Inter', sans-serif;
+    color: #E8F5F0;
+    margin: 0;
+    padding: 50px 5%;
+    min-height: 100vh;
+}
+
+h1 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: #fff;
+    text-shadow: 0 0 15px rgba(0, 208, 132, 0.3);
+}
+
+/* ==================== TABLE DESIGN (GLASS) ==================== */
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 12px; /* Space between rows */
+    border: none !important; /* Overriding border="1" */
+}
+
+th {
+    background: transparent;
+    color: var(--primary);
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    padding: 15px 25px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+
+tr {
+    background: var(--glass-bg);
+    backdrop-filter: blur(15px);
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+tr:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateX(8px); /* Subtle slide effect on hover */
+}
+
+td {
+    padding: 20px 25px;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+
+/* Rounding row corners */
+td:first-child { border-left: 1px solid var(--border); border-radius: 15px 0 0 15px; }
+td:last-child { border-right: 1px solid var(--border); border-radius: 0 15px 15px 0; }
+
+/* ==================== POINTS COLUMN ==================== */
+td:nth-child(3) {
+    font-weight: 800;
+    color: var(--accent);
+    text-shadow: 0 0 10px var(--point-glow);
+}
+
+/* ==================== JOIN BUTTON ==================== */
+button[type="submit"] {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    border: none;
+    color: var(--dark-bg);
+    padding: 10px 25px;
+    border-radius: 50px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 4px 15px rgba(0, 208, 132, 0.2);
+}
+
+button[type="submit"]:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px var(--primary);
+}
+
+/* ==================== BACK LINK ==================== */
+a {
+    display: inline-block;
+    margin-top: 30px;
+    color: #A8B8C8;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+a:hover {
+    color: var(--primary);
+    transform: translateX(-5px);
+}
+
+/* ==================== ANIMATIONS ==================== */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+tbody tr {
+    animation: fadeInUp 0.5s ease backwards;
+}
+
+/* Staggered animation for rows */
+tr:nth-child(1) { animation-delay: 0.1s; }
+tr:nth-child(2) { animation-delay: 0.2s; }
+tr:nth-child(3) { animation-delay: 0.3s; }

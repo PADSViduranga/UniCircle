@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Charity Projects</title>
+    <link rel="stylesheet" th:href="@{/css/charity.css}">
+</head>
+<body>
+<h1>Charity Projects</h1>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Points</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="c : ${charities}">
+        <td th:text="${c.title}"></td>
+        <td th:text="${c.description}"></td>
+        <td th:text="${c.points}"></td>
+        <td>
+            <form th:action="@{/charity/join/{id}(id=${c.id})}" method="post">
+                <button type="submit">Join</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<br/>
+<a th:href="@{/dashboard}">Back to Dashboard</a>
+</body>
+</html>
