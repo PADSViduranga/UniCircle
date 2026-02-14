@@ -76,22 +76,4 @@ user, which are then reflected on the leaderboard.
 Charity and Leaderboard
 Users can participate in charity events. Participating in a charity event awards points to the
 user, which are then reflected on the leaderboard.
-Project Structure Overview
-UniCricle/
-├── src/
-│ ├── main/
-│ │ ├── java/com/example/UniCricle/
-│ │ │ ├── Auth/ # Custom Spring Security handlers
-│ │ │ ├── config/ # Spring configuration (Security,
-DataInitializer)
-│ │ │ ├── controller/ # MVC Controllers
-│ │ │ ├── DTO/ # Data Transfer Objects
-│ │ │ ├── model/ # JPA Entities and Enums
-│ │ │ ├── Repository/ # Spring Data JPA Repositories
-│ │ │ └── Service/ # Business Logic Services
-│ │ └── resources/
-│ │ ├── static/ # Static assets (CSS, JS, Images)
-│ │ └── templates/ # Thymeleaf HTML templates
-│ └── test/ # Test classes
-├── pom.xml # Maven Project Object Model
-└── README.md # This file
+
