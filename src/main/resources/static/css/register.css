@@ -1,0 +1,200 @@
+/* ==================== GLOBAL STYLES ==================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #0A1428 0%, #1a2332 100%);
+    color: #E8F5F0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 1rem;
+}
+
+.auth-wrapper {
+    background: linear-gradient(135deg, #0A1428 0%, #1a2332 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ==================== AUTH CARD ==================== */
+.auth-card {
+    background: linear-gradient(135deg, #1a2332 0%, #2d3d4d 100%);
+    border: 1px solid rgba(0, 208, 132, 0.2);
+    border-radius: 15px;
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+}
+
+/* ==================== AUTH HEADER ==================== */
+.auth-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.auth-header h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.5px;
+}
+
+.auth-header h3 .text-success {
+    color: #00D084;
+    text-shadow: 0 0 10px rgba(0, 208, 132, 0.4);
+}
+
+.auth-header small {
+    color: #A8B8C8;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* ==================== AUTH BODY ==================== */
+.auth-body {
+    margin-top: 1.5rem;
+}
+
+/* ==================== ALERTS ==================== */
+.alert {
+    padding: 0.875rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    border: none;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.alert-danger {
+    background: rgba(220, 53, 69, 0.15);
+    color: #ff6b6b;
+    border-left: 3px solid #ff6b6b;
+}
+
+.alert-success {
+    background: rgba(0, 208, 132, 0.15);
+    color: #00D084;
+    border-left: 3px solid #00D084;
+}
+
+/* ==================== FORM STYLES ==================== */
+.mb-3 {
+    margin-bottom: 1.25rem;
+}
+
+.mb-4 {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #A8B8C8;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-control-custom {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1.5px solid rgba(0, 208, 132, 0.2);
+    border-radius: 8px;
+    color: #E8F5F0;
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.form-control-custom::placeholder {
+    color: rgba(168, 184, 200, 0.5);
+}
+
+.form-control-custom:focus {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: #00D084;
+    box-shadow: 0 0 0 3px rgba(0, 208, 132, 0.1);
+}
+
+/* ==================== BUTTONS ==================== */
+.btn-auth {
+    width: 100%;
+    padding: 0.9rem 1.5rem;
+    background: linear-gradient(135deg, #00D084 0%, #009B5F 100%);
+    color: #0A1428;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-family: inherit;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 8px 20px rgba(0, 208, 132, 0.3);
+}
+
+.btn-auth:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(0, 208, 132, 0.4);
+}
+
+.btn-auth:active {
+    transform: translateY(0);
+}
+
+/* ==================== TEXT UTILITIES ==================== */
+.text-center {
+    text-align: center;
+}
+
+.text-muted {
+    color: #A8B8C8;
+}
+
+.text-success {
+    color: #00D084;
+}
+
+.text-decoration-none {
+    text-decoration: none;
+}
+
+.fw-bold {
+    font-weight: 700;
+}
+
+.small {
+    font-size: 0.85rem;
+}
+
+.opacity-75 {
+    opacity: 0.75;
+}
+
+.mt-4 {
+    margin-top: 1.5rem;
+}

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Select Club | UniCircle</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        .club-card { transition: all 0.3s; border: none; border-radius: 15px; overflow: hidden; }
+        .club-card:hover { transform: translateY(-10px); box-shadow: 0 10px 20px rgba(0,0,0,0.12) !important; }
+        .icon-box { width: 60px; height: 60px; background: #e8f5e9; color: #198754; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+    </style>
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-dark bg-dark mb-5 shadow-sm">
+    <div class="container">
+        <a class="navbar-brand" href="/dashboard"><i class="bi bi-circle-half me-2"></i>UniCircle Leader Hub</a>
+        <div class="d-flex align-items-center text-white">
+            <span class="me-3" th:text="${#authentication.name}">Username</span>
+            <form th:action="@{/logout}" method="post" class="m-0">
+                <button type="submit" class="btn btn-outline-light btn-sm">Logout</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="text-center mb-5">
+        <h1 class="fw-bold">My Managed <span class="text-success">Clubs</span></h1>
+        <p class="text-muted">As a President, select a club card below to manage members and announcements.</p>
+    </div>
+
+    <div class="row g-4 justify-content-center">
+        <div class="col-md-4" th:each="c : ${managedClubs}">
+            <div class="card club-card shadow-sm h-100">
+                <div class="card-body text-center p-4">
+                    <div class="icon-box">
+                        <i class="bi bi-shield-lock-fill fs-2"></i>
+                    </div>
+                    <h4 class="fw-bold mb-2" th:text="${c.name}">Club Name</h4>
+                    <p class="text-muted small mb-4" th:text="${c.description}">Club management tools and overview.</p>
+                    <hr class="mb-4">
+                    <div class="d-grid">
+                        <a th:href="@{/leader/dashboard/{id}(id=${c.id})}" class="btn btn-success rounded-pill py-2">
+                            Manage Dashboard <i class="bi bi-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 text-center py-5" th:if="${#lists.isEmpty(managedClubs)}">
+            <div class="mb-3">
+                <i class="bi bi-folder-x text-muted" style="font-size: 4rem;"></i>
+            </div>
+            <h4 class="text-muted">No Clubs Assigned</h4>
+            <p>You have the President role, but you aren't assigned to a club yet.</p>
+            <a href="/dashboard" class="btn btn-secondary mt-2">Back to Student Dashboard</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

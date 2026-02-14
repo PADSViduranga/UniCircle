@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Club Leader Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h2 class="mb-0">Leader Dashboard: <span th:text="${club.name}">Club Name</span></h2>
+            <a href="/clubs" class="btn btn-light btn-sm">Back to Clubs</a>
+        </div>
+
+        <div class="card-body">
+            <h4 class="mb-4">Pending Membership Requests</h4>
+
+            <div th:if="${#lists.isEmpty(pendingMembers)}" class="alert alert-info">
+                No pending requests at the moment.
+            </div>
+
+            <table th:if="${!#lists.isEmpty(pendingMembers)}" class="table table-hover">
+                <thead class="table-dark">
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Role Requested</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="member : ${pendingMembers}">
+                    <td th:text="${member.user.username}">Username</td>
+                    <td th:text="${member.user.email}">Email</td>
+                    <td th:text="${member.role}">MEMBER</td>
+                    <td>
+                        <form th:action="@{'/leader/approve-member/' + ${member.id}}" method="post">
+                            <button type="submit" class="btn btn-success btn-sm">Approve & Award Points</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

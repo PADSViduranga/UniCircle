@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - UniCircle</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body th:style="|background: linear-gradient(rgba(10, 20, 40, 0.95), rgba(10, 20, 40, 0.95)), url('@{/images/second.png}') no-repeat center center fixed; background-size: cover;|">
+
+<nav class="navbar">
+    <div class="nav-container">
+        <div class="nav-brand glowing-brand">Uni<span>Circle</span></div>
+
+        <div class="nav-links">
+            <a th:href="@{/}" class="nav-link-animate">Home</a>
+            <a th:href="@{/#features}" class="nav-link-animate">Features</a>
+            <a th:href="@{/about}" class="nav-link-animate">About Us</a>
+
+            <form th:action="@{/logout}" method="post" style="display: inline;">
+                <button type="submit" class="btn-get-started" style="background: #ff4d4d; border: none; cursor: pointer;">Logout</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<header class="hero-section" style="min-height: auto; padding-top: 120px; padding-bottom: 40px;">
+    <div class="hero-container">
+        <div class="hero-content">
+            <div class="hero-badge">Welcome Back!</div>
+            <h1 class="hero-title">Student <span>Dashboard</span></h1>
+            <p class="hero-subtitle">Hello, <span th:text="${#authentication.name}" style="color: #00ff88;">Student</span>! Manage your university circle and track your impact here.</p>
+        </div>
+    </div>
+</header>
+
+<section class="cards-section" style="padding-top: 0;">
+    <div class="cards-grid">
+
+        <div class="card" th:onclick="|window.location.href='@{/clubs}'|">
+            <div class="card-shimmer"></div>
+            <div class="card-icon">🌿</div>
+            <h3 class="card-title">My Clubs</h3>
+            <p class="card-description">View joined societies and browse new opportunities to lead.</p>
+            <span class="card-link">Manage →</span>
+        </div>
+
+        <div class="card" th:onclick="|window.location.href='@{/charity}'|">
+            <div class="card-shimmer"></div>
+            <div class="card-icon">🤝</div>
+            <h3 class="card-title">CSR & Points</h3>
+            <p class="card-description">Check your volunteer hours and upcoming charity projects.</p>
+            <span class="card-link">View Points →</span>
+        </div>
+
+        <div class="card" th:onclick="|window.location.href='@{/announcements}'|">
+            <div class="card-shimmer"></div>
+            <div class="card-icon">📢</div>
+            <h3 class="card-title">Announcements</h3>
+            <p class="card-description">Stay updated with latest news from NSBM Green University.</p>
+            <span class="card-link">Read More →</span>
+        </div>
+
+    </div>
+</section>
+
+<footer class="main-footer">
+    <div class="footer-content">
+        <div class="footer-brand glowing-brand">Uni<span>Circle</span></div>
+        <p class="footer-tagline">Logged in as: <span th:text="${#authentication.name}">User</span></p>
+        <div class="footer-links">
+            <a th:href="@{/}">Home</a>
+            <a th:href="@{/#features}">Features</a>
+            <a th:href="@{/contact}">Support</a>
+        </div>
+        <div class="footer-divider"></div>
+        <p class="copyright">© 2026 UniCircle System | NSBM Green University</p>
+    </div>
+</footer>
+
+</body>
+</html>

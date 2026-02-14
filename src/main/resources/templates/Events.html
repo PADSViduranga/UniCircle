@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events - UniCircle</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Link to the external CSS file -->
+    <link rel="stylesheet" th:href="@{/css/events.css}">
+    <!-- Fallback for local preview -->
+    <link rel="stylesheet" href="events.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+        <a class="navbar-brand" href="/dashboard">Uni<span>Circle</span></a>
+        <div class="ms-auto d-flex align-items-center">
+            <span class="text-white-50 me-3 d-none d-md-inline">
+                Welcome, <strong class="text-white" th:text="${username}">User</strong>
+            </span>
+            <a class="btn btn-outline-light btn-sm" href="/logout">Logout</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="page-header d-flex justify-content-between align-items-end">
+        <div>
+            <h2 class="page-title">Upcoming Events</h2>
+            <p class="text-muted mb-0">Explore and manage campus activities at NSBM.</p>
+        </div>
+        <div sec:authorize="hasRole('ADMIN') or hasRole('SUPER_ADMIN')">
+            <a class="btn btn-success" href="/events/create">
+                <i class="bi bi-calendar-plus me-2"></i>Create Event
+            </a>
+        </div>
+    </div>
+
+    <div class="table-card">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Event Name</th>
+                    <th>Date</th>
+                    <th>Venue</th>
+                    <th class="text-center">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="event : ${events}">
+                    <td><div class="event-name" th:text="${event.name}">Event Name</div></td>
+                    <td>
+                        <i class="bi bi-calendar3 me-2 text-muted"></i>
+                        <span th:text="${event.date}">Date</span>
+                    </td>
+                    <td>
+                        <div class="location-badge">
+                            <i class="bi bi-geo-alt-fill text-danger"></i>
+                            <span th:text="${event.location}">Location</span>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <a class="btn btn-primary btn-sm" th:href="@{'/events/' + ${event.id}}">View</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
